@@ -1,0 +1,44 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="Presentacion.SiteMaster" %>
+
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <link rel="stylesheet" type="text/css" href="Estilo_M.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Mi Aplicación</title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <!-- Menú de navegación moderno -->
+        <nav class="menu">
+            <ul style="display: flex; gap: 15px;">
+                <li runat="server" id="liInicio"><a href="/PaginasPublicas/FormPrincipal.aspx">Inicio</a></li>
+                <li runat="server" id="liRegistroCliente"><a href="/PaginasPublicas/FormRegistroCliente.aspx">Ingresar Como Nuevo Cliente</a></li>
+                <li runat="server" id="liRegistroProveedor"><a href="/PaginasPublicas/FormRegistroProvedor.aspx">Ingresar Como Nuevo Provedor</a></li>
+                <li runat="server" id="liIngresarSitio"><a href="/PaginasProvedor/FormMantenimientoSitio.aspx">Ingresar nuevo Sitio</a></li>
+                <li runat="server" id="liActualizarSitio"><a href="/PaginasProvedor/FormActualizarSitios.aspx">Actualizar Sitio</a></li>
+                <li runat="server" id="li1"><a href="/PaginasEmpleado/FormMantenimientoPersonasEmpleado.aspx">Actualizar Personas</a></li>
+                 <li runat="server" id="li1MisDatos"><a href ="/PaginasPublicas/FormActulizarMisDatos.aspx">Editar mis datos personales</a></li>
+                <!-- Cambiado a
+                
+                    //PaginasEmpleado/FormMantenimientoPersonasEmpleado
+                <li runat="server" id="liConsultaSitio"><a href ="/PaginasPublicas/FormConsultaSitio.aspx">dsdsd</a></li>
+                
+                <!-- Menú desplegable -->
+                
+
+              
+                <li runat="server" id="liLogin"><a href="/PaginasPublicas/FormLogin.aspx">Iniciar Sesion</a></li>
+            </ul>
+        </nav>
+
+        <!-- Contenido dinámico de las páginas hijas -->
+        <div class="contenido-principal">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>

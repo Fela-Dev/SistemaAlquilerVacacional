@@ -1,0 +1,134 @@
+﻿/* Fondo general */
+body {
+    background-color: #f5f6fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Menú de navegación */
+.menu {
+    background-color: #006400; /* Verde moderno */
+    padding: 12px 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+    .menu ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .menu li {
+        position: relative;
+    }
+
+    .menu a {
+        color: white;
+        text-decoration: none;
+        padding: 8px 12px;
+        display: block;
+        border-radius: 6px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+        .menu a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+/* Menú desplegable */
+.dropdown {
+}
+
+ul.submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #ffffff;
+    border-radius: 8px;
+    min-width: 180px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 8px 0;
+    z-index: 1000;
+    transition: opacity 0.3s ease;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.dropdown:hover .submenu {
+    display: block;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.submenu li {
+    display: block;
+}
+
+.submenu a {
+    color: #006400;
+    padding: 10px 16px;
+    transition: background-color 0.3s ease;
+}
+
+    .submenu a:hover {
+        background-color: #f0f9f0;
+    }
+
+/* Botones personalizados */
+.boton-personalizado {
+    background-color: #006400;
+    color: white;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.95rem;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+    .boton-personalizado:hover {
+        background-color: #004d00;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
+    }
+
+    .boton-personalizado:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        background-color: #888 !important;
+        color: #ddd;
+        box-shadow: none;
+    }
+.miniatura {
+    width: 100px;
+    height: 70px;
+    cursor: pointer;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+}
+
+    .miniatura:hover {
+        border-color: #007bff;
+    }
+
+#imgPrincipal {
+    width: 500px;
+    height: 300px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.galeria {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
