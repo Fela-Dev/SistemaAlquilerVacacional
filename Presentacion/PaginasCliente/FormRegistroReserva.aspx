@@ -88,6 +88,62 @@
             <label>Teléfono de Contacto</label>
             <asp:TextBox ID="txtTelefono" runat="server" />
         </div>
+        <!-- Sección para mostrar resumen del costo -->
+        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+
+<asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+    <ContentTemplate>
+
+        <div class="form-group" style="margin-top:25px;">
+            <h3>Resumen del Costo</h3>
+
+            <asp:Panel ID="pnlResumenCosto" runat="server" CssClass="form-container" Visible="false">
+                <table style="width:100%; border-collapse:collapse;">
+                    <tr>
+                        <td><strong>Precio por Noche:</strong></td>
+                        <td><asp:Label ID="lblPrecioPorNoche" runat="server" Text="₡0.00"></asp:Label></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cantidad de Noches:</strong></td>
+                        <td><asp:Label ID="lblCantidadNoches" runat="server" Text="0"></asp:Label></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Total de Personas:</strong></td>
+                        <td><asp:Label ID="lblTotalPersonas" runat="server" Text="0"></asp:Label></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Subtotal:</strong></td>
+                        <td><asp:Label ID="lblSubtotal" runat="server" Text="₡0.00"></asp:Label></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Impuestos (13%):</strong></td>
+                        <td><asp:Label ID="lblImpuestos" runat="server" Text="₡0.00"></asp:Label></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Comisión (10%):</strong></td>
+                        <td><asp:Label ID="lblComision" runat="server" Text="₡0.00"></asp:Label></td>
+                    </tr>
+                    <tr style="border-top:1px solid #ccc;">
+                        <td><strong>Total a Pagar:</strong></td>
+                        <td><asp:Label ID="lblTotal" runat="server" Text="₡0.00" Font-Bold="True"></asp:Label></td>
+                    </tr>
+                </table>
+            </asp:Panel>
+
+            <asp:Button ID="btnCalcularCosto" runat="server" Text="Calcular Costo"
+                        CssClass="btn-registrar"
+                        OnClick="btnCalcularCosto_Click" />
+        </div>
+
+    </ContentTemplate>
+
+   
+   
+    <Triggers>
+        <asp:AsyncPostBackTrigger ControlID="btnCalcularCosto" EventName="Click" />
+    </Triggers>
+</asp:UpdatePanel>
+
 
         <asp:Button ID="btnRegistrar" runat="server" Text="Registrar Reserva" CssClass="btn-registrar" OnClick="btnRegistrar_Click" />
     </div>

@@ -1,13 +1,15 @@
-﻿using System;
+﻿using Datos;
+using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Data;
 using System.Configuration;
-using Datos;
+using System.Data;
+using System.Data.SqlClient;
+using System.Web.UI;
 namespace Presentacion.PaginasCliente
 {
     public partial class FormRegistroReserva : System.Web.UI.Page
     {
+        Boolean calculoRealizado = false;
         protected void Page_Load(object sender, EventArgs e)
         {
             // Validar sesión de cliente
@@ -21,6 +23,7 @@ namespace Presentacion.PaginasCliente
         {
             try
             {
+                
                 // Captura de datos
                 int idCliente = Convert.ToInt32(Session["idPersona"]); // o valor de prueba
                 int usuarioRegistra = 1019; // puedes ajustarlo
@@ -37,16 +40,16 @@ namespace Presentacion.PaginasCliente
                 // Crear lista de parámetros
                 SqlParameter[] listaParametros = new SqlParameter[]
                 {
-            new SqlParameter("@IdCliente", idCliente),
-            new SqlParameter("@IdSitio", idSitio),
-            new SqlParameter("@FechaInicio", fechaInicio),
-            new SqlParameter("@FechaFin", fechaFin),
-            new SqlParameter("@CantidadAdultos", adultos),
-            new SqlParameter("@CantidadNinos", ninos),
-            new SqlParameter("@CantidadBebes", bebes),
-            new SqlParameter("@SolicitudesEspeciales", (object)solicitudes ?? DBNull.Value),
-            new SqlParameter("@TelefonoContacto", (object)telefono ?? DBNull.Value),
-            new SqlParameter("@UsuarioQueRegistra", usuarioRegistra)
+                    new SqlParameter("@IdCliente", idCliente),
+                    new SqlParameter("@IdSitio", idSitio),
+                    new SqlParameter("@FechaInicio", fechaInicio),
+                    new SqlParameter("@FechaFin", fechaFin),
+                    new SqlParameter("@CantidadAdultos", adultos),
+                    new SqlParameter("@CantidadNinos", ninos),
+                    new SqlParameter("@CantidadBebes", bebes),
+                    new SqlParameter("@SolicitudesEspeciales", (object)solicitudes ?? DBNull.Value),
+                    new SqlParameter("@TelefonoContacto", (object)telefono ?? DBNull.Value),
+                    new SqlParameter("@UsuarioQueRegistra", usuarioRegistra)
                 };
 
                 // Ejecutar SP y obtener resultados
@@ -60,31 +63,99 @@ namespace Presentacion.PaginasCliente
                     if (idReserva > 0)
                     {
                         // Éxito
-                        string script = $"alert('{mensaje.Replace("'", "\\'")}'); window.location='FormPrincipal.aspx';";
+                        string script = $"alert('{mensaje.Replace("'", "\\'")}');";
                         ClientScript.RegisterStartupScript(this.GetType(), "ExitoReserva", script, true);
                     }
                     else
                     {
                         // Error del SP
-                        string script = $"alert('Error: {mensaje.Replace("'", "\\'")}'); window.location='FormPrincipal.aspx';";
+                        string script = $"alert('Error: {mensaje.Replace("'", "\\'")}');";
                         ClientScript.RegisterStartupScript(this.GetType(), "ErrorReserva", script, true);
                     }
                 }
                 else
                 {
                     // Ningún resultado devuelto
-                    string script = "alert('Error: No se obtuvo respuesta del servidor.'); window.location='FormPrincipal.aspx';";
+                    string script = "alert('Error: No se obtuvo respuesta del servidor.');";
                     ClientScript.RegisterStartupScript(this.GetType(), "ErrorReserva", script, true);
                 }
             }
             catch (Exception ex)
             {
                 // Error inesperado de C#
-                string script = $"alert('Error inesperado: {ex.Message.Replace("'", "\\'")}'); window.location='FormPrincipal.aspx';";
+                string script = $"alert('Error inesperado: {ex.Message.Replace("'", "\\'")}');";
                 ClientScript.RegisterStartupScript(this.GetType(), "ErrorReserva", script, true);
             }
-        }
 
+        }
+      
+        protected void btnCalcularCosto_Click(object sender, EventArgs e)
+        {
+            pnlResumenCosto.Visible = true;
+            try
+            {
+                // Captura de datos
+                int idSitio = Convert.ToInt32(Request.QueryString["id"]);
+                DateTime fechaInicio = calFechaInicio.SelectedDate;
+                DateTime fechaFin = calFechaFin.SelectedDate;
+
+                int adultos = string.IsNullOrEmpty(txtAdultos.Text) ? 0 : int.Parse(txtAdultos.Text);
+                int ninos = string.IsNullOrEmpty(txtNinos.Text) ? 0 : int.Parse(txtNinos.Text);
+                int bebes = string.IsNullOrEmpty(txtBebes.Text) ? 0 : int.Parse(txtBebes.Text);
+
+                int totalPersonas = adultos + ninos + bebes;
+
+                // Crear lista de parámetros
+                SqlParameter[] listaParametros = new SqlParameter[]
+                {
+                new SqlParameter("@IdSitio", idSitio),
+                new SqlParameter("@FechaInicio", fechaInicio),
+                new SqlParameter("@FechaFin", fechaFin),
+                new SqlParameter("@TotalPersonas", totalPersonas)
+                        };
+
+                // Ejecutar SP
+                DataTable dt = Datos.ConexionSQL.EjecutarConRetorno("sp_PreCalculoReserva", listaParametros);
+
+                if (dt.Rows.Count > 0)
+                {
+                    // Ejemplo: mostramos resultados en etiquetas del resumen (ajusta según tus columnas)
+                    lblPrecioPorNoche.Text = "₡" + Convert.ToDecimal(dt.Rows[0]["PrecioPorNoche"]).ToString("N2");
+                    lblCantidadNoches.Text = dt.Rows[0]["CantidadNoches"].ToString();
+                    lblTotalPersonas.Text = totalPersonas.ToString();
+                    lblSubtotal.Text = "₡" + Convert.ToDecimal(dt.Rows[0]["Subtotal"]).ToString("N2");
+                    lblImpuestos.Text = "₡" + Convert.ToDecimal(dt.Rows[0]["Impuestos"]).ToString("N2");
+                    lblComision.Text = "₡" + Convert.ToDecimal(dt.Rows[0]["Comision"]).ToString("N2");
+                    lblTotal.Text = "₡" + Convert.ToDecimal(dt.Rows[0]["Total"]).ToString("N2");
+
+                    // Mostrar panel de resumen
+                    pnlResumenCosto.Visible = true;
+
+                    // Actualizar UpdatePanel 
+                    UpdatePanel1.Update();
+                    calculoRealizado = true;
+                }
+                else
+                {
+                    string script = "alert('No se recibieron datos del servidor.');";
+                    ClientScript.RegisterStartupScript(this.GetType(), "SinDatos", script, true);
+                }
+            }
+            catch (Exception ex)
+            {
+                string mensajeError = ex.Message
+                    .Replace("'", "\\'")
+                    .Replace("\r", " ")
+                    .Replace("\n", " ");
+
+                string script = $"alert('Error inesperado: {mensajeError}');";
+
+                // Usa ScriptManager si estás en un UpdatePanel, ClientScript si no
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "ErrorReserva", script, true);
+            }
+
+
+        }
     }
 }
 

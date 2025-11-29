@@ -21,6 +21,10 @@
                 <li runat="server" id="liActualizarSitio"><a href="/PaginasProvedor/FormActualizarSitios.aspx">Actualizar Sitio</a></li>
                 <li runat="server" id="li1"><a href="/PaginasEmpleado/FormMantenimientoPersonasEmpleado.aspx">Actualizar Personas</a></li>
                  <li runat="server" id="li1MisDatos"><a href ="/PaginasPublicas/FormActulizarMisDatos.aspx">Editar mis datos personales</a></li>
+                 <li runat="server" id="rxc"><a href="/PaginasCliente/FormRegistroXCliente.aspx">Reservas Registradas</a></li>
+                <li runat="server" id="lblLogin"><a href="/PaginasPublicas/FormLogin.aspx"> Cerrar Sesion</a></li>
+                 
+                 
                 <!-- Cambiado a
                 
                     //PaginasEmpleado/FormMantenimientoPersonasEmpleado

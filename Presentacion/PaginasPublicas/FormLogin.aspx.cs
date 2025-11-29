@@ -13,6 +13,7 @@ namespace Presentacion.PaginasPublicas
         protected void Page_Load(object sender, EventArgs e)
         {
             LoginObj loginControl = new LoginObj();
+            Session["rol"] = "General";
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)

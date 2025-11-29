@@ -82,7 +82,12 @@ namespace Presentacion.PaginasPublicas
                 {
                     int idPersona = Convert.ToInt32(resultado.Rows[0]["IdPersona"]);
                     string mensaje = resultado.Rows[0]["Mensaje"].ToString();
-
+                    if (idPersona == 0)
+                    {
+                        string script = $"alert('Error: {mensaje.Replace("'", "\\'")}');";
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "ErrorPersona", script, true);
+                        return;
+                    }
                     if (idPersona > 0)
                     {
                         string script = $"alert('{mensaje.Replace("'", "\\'")}'); window.location='FormPrincipal.aspx';";
@@ -93,7 +98,7 @@ namespace Presentacion.PaginasPublicas
                         string script = $"alert('No se pudo actualizar la persona.');";
                         ClientScript.RegisterStartupScript(this.GetType(), "ErrorPersona", script, true);
                     }
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Funcionario actualizado exitofsfdcccccccccccccccccccccccccccsfdsfsdfsfsamente');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Funcionario actualizado exitofsdfsfsamente');", true);
                 }
                 else
                 {
@@ -103,14 +108,15 @@ namespace Presentacion.PaginasPublicas
             }
             catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Funcionario actualizado exitosamente');", true);
-                string script = $"alert('Error: {ex.Message.Replace("'", "\\'")}');";
-                ClientScript.RegisterStartupScript(this.GetType(), "ErrorGeneral", script, true);
+                string mensajeError = HttpUtility.JavaScriptStringEncode(ex.Message);
+                string script = $"alert('Error inesperado: {mensajeError}');";
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "ErrorGeneral", script, true);
             }
 
-            
 
-            
+
+
+
         }
 
         protected void btnCancelar_Click(object sender, EventArgs e)

@@ -19,45 +19,59 @@ namespace Presentacion.PaginasPublicas
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-            
+            try
+            {
 
-            Persona persona = new Persona();
-            persona.operacion = "INSERT";//'INSERT'
-            persona.IdTipoPersona = "Cliente";
-            persona.IdEstado = 1;
-            persona.IdPersona = 0;
-            persona.PrimerNombre = txtPrimerNombre.Text;
-            persona.SegundoNombre = txtSegundoNombre.Text;
-            persona.PrimerApellido = txtPrimerApellido.Text;
-            persona.SegundoApellido = txtSegundoApellido.Text;
-            persona.Genero = ddlGenero.SelectedValue.Substring(0, 1);
-            persona.FechaNacimiento = DateTime.Parse(txtFecha.Text);
+                LoginObj loginObj = new LoginObj();
+                loginObj.UserName = txtUsuario.Text;
+                loginObj.Password = txtContra.Text;
+                loginObj.IdPersona = txtNumeroIdentificacion.Text;
+                loginObj.operacion = "INSERT";
+                Persona persona = new Persona();
 
-            persona.TipoIdentificacion = ddlTipoIdentificacion.SelectedValue;
-            persona.NumeroIdentificacion = txtNumeroIdentificacion.Text;
-            persona.Nacionalidad = txtNacionalidad.Text;
+                loginObj.VerificarUsuarioUnico();
 
-            persona.TelefonoPrincipal = txtTelefonoPrincipal.Text;
-            persona.TelefonoSecundario = txtTelefonoSecundario.Text;
-            persona.CorreoElectronicoPrincipal = txtEmailPrincipal.Text;
-            persona.CorreoElectronicoSecundario = txtEmailSecundario.Text;
+                persona.operacion = "INSERT";//'INSERT'
+                persona.IdTipoPersona = "Cliente";
+                persona.IdEstado = 1;
+                persona.IdPersona = 0;
+                persona.PrimerNombre = txtPrimerNombre.Text;
+                persona.SegundoNombre = txtSegundoNombre.Text;
+                persona.PrimerApellido = txtPrimerApellido.Text;
+                persona.SegundoApellido = txtSegundoApellido.Text;
+                persona.Genero = ddlGenero.SelectedValue.Substring(0, 1);
+                persona.FechaNacimiento = DateTime.Parse(txtFecha.Text);
 
-            persona.Provincia = txtProvincia.Text;
-            persona.Canton = txtCanton.Text;
-            persona.Distrito = txtDistrito.Text;
-            persona.DireccionExacta = txtDireccionExacta.Text;
-            persona.CodigoPostal = txtCodigoPostal.Text;
-            
-            //ejecutar el sp
-            persona.ejecutarConsulta();
-            LoginObj loginObj = new LoginObj();
-            loginObj.UserName = txtUsuario.Text;
-            loginObj.Password = txtContra.Text;
-            loginObj.IdPersona = txtNumeroIdentificacion.Text;
-            loginObj.operacion = "INSERT";
-            loginObj.ejecutarConsultaMantenimiento();
+                persona.TipoIdentificacion = ddlTipoIdentificacion.SelectedValue;
+                persona.NumeroIdentificacion = txtNumeroIdentificacion.Text;
+                persona.Nacionalidad = txtNacionalidad.Text;
 
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Funcionario actualizado exitosamente');", true);
+                persona.TelefonoPrincipal = txtTelefonoPrincipal.Text;
+                persona.TelefonoSecundario = txtTelefonoSecundario.Text;
+                persona.CorreoElectronicoPrincipal = txtEmailPrincipal.Text;
+                persona.CorreoElectronicoSecundario = txtEmailSecundario.Text;
+
+                persona.Provincia = txtProvincia.Text;
+                persona.Canton = txtCanton.Text;
+                persona.Distrito = txtDistrito.Text;
+                persona.DireccionExacta = txtDireccionExacta.Text;
+                persona.CodigoPostal = txtCodigoPostal.Text;
+
+                //ejecutar el sp
+                persona.ejecutarConsulta();
+                
+                
+                loginObj.ejecutarConsultaMantenimiento();//insertar usuario
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Funcionario actualizado exitosamente');", true);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = ex.Message.Replace("'", "\\'").Replace("\r", "").Replace("\n", "");
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alert",
+                    $"alert('Error al registrar el cliente: {mensaje}');", true);
+            }
+
         }
 
         protected void btnCancelar_Click(object sender, EventArgs e)

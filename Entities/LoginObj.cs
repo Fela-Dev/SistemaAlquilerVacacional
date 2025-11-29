@@ -59,5 +59,45 @@ namespace Entities
             };//lista con las datos del form
             return Datos.ConexionSQL.EjecutarConRetorno("sp_AutenticarUsuario_Temporal", lista);
         }
+        public void VerificarUsuarioUnico()
+        {
+            SqlParameter[] lista = new SqlParameter[]
+            {
+        new SqlParameter("@usuario", UserName)
+            };
+
+            DataTable dt = Datos.ConexionSQL.EjecutarConRetorno("sp_usuario_unico", lista);
+
+            if (dt.Rows.Count > 0)
+            {
+                int cantidad = Convert.ToInt32(dt.Rows[0]["cantidad"]);
+
+                if (cantidad > 0)
+                {
+                    // Usuario ya existe → lanzamos una excepción controlada
+                    throw new Exception("Nombre de usuario inválido: ya está en uso.");
+                }
+            }
+            else
+            {
+                throw new Exception("Error al verificar la unicidad del usuario.");
+            }
+        }
+
+        /*
+         * ALTER procedure [dbo].[sp_usuario_unico](
+	@usuario varchar(200)
+)
+as
+begin	
+	select
+		count(UsuariosSistema.NombreUsuario) as[cantidad]
+	from UsuariosSistema
+	where NombreUsuario=@usuario 
+end
+         * 
+         * 
+         * 
+         */
     }
 }

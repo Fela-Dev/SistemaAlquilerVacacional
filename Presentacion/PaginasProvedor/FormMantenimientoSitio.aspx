@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="FormMantenimientoSitio.aspx.cs" Inherits="Presentacion.PaginasProvedor.FormMantenimientoSitio" %>
+﻿   <%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="FormMantenimientoSitio.aspx.cs" Inherits="Presentacion.PaginasProvedor.FormMantenimientoSitio" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="EstiloLogin.css" rel="stylesheet" type="text/css" />

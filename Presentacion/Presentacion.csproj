@@ -130,6 +130,7 @@
     <Content Include="ImagnesProyecto\ImagenesSitios\Ingreso-principal-de-casa-en-la-montaña.jpg" />
     <Content Include="ImagnesProyecto\ImagenesSitios\sitioDefecto.jpg" />
     <Content Include="PaginasCliente\FormRegistroReserva.aspx" />
+    <Content Include="PaginasCliente\FormRegistroXCliente.aspx" />
     <Content Include="PaginasEmpleado\FormMantenimientoPersonasEmpleado.aspx" />
     <Content Include="PaginasProvedor\FormActualizarSitios.aspx" />
     <Content Include="PaginasProvedor\FormMantenimientoSitio.aspx" />
@@ -234,6 +235,13 @@
     </Compile>
     <Compile Include="PaginasCliente\FormRegistroReserva.aspx.designer.cs">
       <DependentUpon>FormRegistroReserva.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PaginasCliente\FormRegistroXCliente.aspx.cs">
+      <DependentUpon>FormRegistroXCliente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PaginasCliente\FormRegistroXCliente.aspx.designer.cs">
+      <DependentUpon>FormRegistroXCliente.aspx</DependentUpon>
     </Compile>
     <Compile Include="PaginasEmpleado\FormMantenimientoPersonasEmpleado.aspx.cs">
       <DependentUpon>FormMantenimientoPersonasEmpleado.aspx</DependentUpon>

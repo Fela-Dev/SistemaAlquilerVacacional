@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -22,32 +22,32 @@ namespace Presentacion.PaginasPublicas
         }
 
         private void CargarSitiosDisponibles(
-     DateTime? fechaInicio = null,
-     DateTime? fechaFin = null,
-     int? idTipoSitio = null,
-     string provincia = null,
-     string canton = null,
-     int? personasMinimas = null,
-     decimal? precioMinimo = null,
-     decimal? precioMaximo = null,
-     bool? permiteMascotas = null,
-     string facilidadesRequeridas = null
- )
+             DateTime? fechaInicio = null,
+             DateTime? fechaFin = null,
+             int? idTipoSitio = null,
+             string provincia = null,
+             string canton = null,
+             int? personasMinimas = null,
+             decimal? precioMinimo = null,
+             decimal? precioMaximo = null,
+             bool? permiteMascotas = null,
+             string facilidadesRequeridas = null
+             )
         {
             // Crear lista de parámetros
             List<SqlParameter> parametros = new List<SqlParameter>
-    {
-        new SqlParameter("@FechaInicio", (object)fechaInicio ?? DBNull.Value),
-        new SqlParameter("@FechaFin", (object)fechaFin ?? DBNull.Value),
-        new SqlParameter("@IdTipoSitio", (object)idTipoSitio ?? DBNull.Value),
-        new SqlParameter("@Provincia", (object)provincia ?? DBNull.Value),
-        new SqlParameter("@Canton", (object)canton ?? DBNull.Value),
-        new SqlParameter("@PersonasMinimas", (object)personasMinimas ?? DBNull.Value),
-        new SqlParameter("@PrecioMinimo", (object)precioMinimo ?? DBNull.Value),
-        new SqlParameter("@PrecioMaximo", (object)precioMaximo ?? DBNull.Value),
-        new SqlParameter("@PermiteMascotas", (object)permiteMascotas ?? DBNull.Value),
-        new SqlParameter("@FacilidadesRequeridas", (object)facilidadesRequeridas ?? DBNull.Value)
-    };
+            {
+                new SqlParameter("@FechaInicio", (object)fechaInicio ?? DBNull.Value),
+                new SqlParameter("@FechaFin", (object)fechaFin ?? DBNull.Value),
+                new SqlParameter("@IdTipoSitio", (object)idTipoSitio ?? DBNull.Value),
+                new SqlParameter("@Provincia", (object)provincia ?? DBNull.Value),
+                new SqlParameter("@Canton", (object)canton ?? DBNull.Value),
+                new SqlParameter("@PersonasMinimas", (object)personasMinimas ?? DBNull.Value),
+                new SqlParameter("@PrecioMinimo", (object)precioMinimo ?? DBNull.Value),
+                new SqlParameter("@PrecioMaximo", (object)precioMaximo ?? DBNull.Value),
+                new SqlParameter("@PermiteMascotas", (object)permiteMascotas ?? DBNull.Value),
+                new SqlParameter("@FacilidadesRequeridas", (object)facilidadesRequeridas ?? DBNull.Value)
+            };
 
             // Ejecutar SP
             DataTable dt = Datos.ConexionSQL.EjecutarConRetorno("sp_BuscarSitiosDisponibles", parametros.ToArray());

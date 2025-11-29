@@ -74,6 +74,7 @@ namespace Presentacion
             li1.Visible=false;
             liLogin.Visible = false;
             li1MisDatos.Visible = true;
+            rxc.Visible = true;
         }
         private void MostrarMenuEmpleado()
         {
